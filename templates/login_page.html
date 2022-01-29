@@ -1,0 +1,168 @@
+<html>
+<head>
+    <title>My Account</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        input {
+        display: block;
+        font-family: "SERomand", Gadget, sans-serif;
+        font-size: 15px;
+        font-weight: bolder;
+        padding: 15px;
+        margin-bottom: 10px;
+        outline: none;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        color: dimgray;
+        }
+        form {
+            width: 90%;
+            min-width: 250px;
+            max-width: 350px;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: whitesmoke;
+        }
+        .placeholder {
+            flex: 1;
+        }
+        .gradient-button {
+            border: 0;
+            font-family: "Arial Black", Gadget, sans-serif;
+            font-size: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: #FFF;
+            box-shadow: 0 0 20px #eee;
+            border-radius: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+            cursor: pointer;
+            display: inline-block;
+            border-radius: 25px;
+            margin-top: 20px;
+            background-image: linear-gradient(to right, #DD5E89 0%, #F7BB97 51%, #DD5E89 100%);
+        }
+        .gradient-button:hover{
+            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+            background-position: right center;
+        }
+        .login-box {
+            background-color: white;
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-bottom: 40px;
+            border-radius: 5px;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+        }
+        .selfest {
+            background-image: linear-gradient(to top, #F7BB97 10%, #DD5E89 100%);
+            -webkit-background-clip: text;
+            color: transparent;
+            font-family: "Arial Black", Gadget, sans-serif;
+            font-size: 50px;
+            text-align: center;
+            text-transform: uppercase;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+        .saying {
+            color: #afafaf;
+            font-family: "SERomand", Gadget, sans-serif;
+            font-size: 20px;
+            text-align: center;
+            text-transform: lowercase;
+            padding-top: 0;
+            margin-top: 0;
+            margin-bottom: 65px;
+        }
+        .copyright {
+            margin: 0;
+            padding-bottom: 5px;
+            font-family: "Helvetica-Narrow", monospace;
+            color: #afafaf;
+            font-size: 12px;
+        }
+        .copyright-box{
+            text-align: center;
+            padding-bottom: 10px;
+        }
+        ::placeholder {
+            opacity: 50%;
+        }
+        input:focus::placeholder {
+            color: transparent;
+        }
+        .links a {
+            /*text-decoration: none;*/
+            font-family: "SERomand", Gadget, sans-serif;
+            font-weight: bolder;
+            font-size: 12px;
+            display: block;
+            color: dimgray;
+            margin: 5px;
+            padding: 0;
+            opacity: 50%;
+        }
+        .links {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function(){
+            let btn = document.querySelector('input[type=submit]');
+            btn.addEventListener('click', async function(event){
+                event.preventDefault();
+                let username = document.querySelector('input[name=username]').value;
+                let password = document.querySelector('input[name=password]').value;
+                let response = await fetch("/login", {
+                    method: "POST",
+                    body: new FormData(document.querySelector('form'))
+                });
+                let response_json = await response.json();
+                if (response_json.success){
+                    let body = document.querySelector('body');
+                    body.style.backgroundColor = "whitesmoke";
+                    body.style.display = "block";
+                    body.innerHTML = response_json.message;
+                }
+            })
+        })
+    </script>
+</head>
+<body>
+
+<div class="placeholder"></div>
+<div class="login-box">
+<form method="POST" action="/login">
+    <p class="selfest">SELFEST</p>
+    <p class="saying">Always yours</p>
+    <input placeholder="e-mail" type="text" name="username" />
+    <input placeholder="password" type="password" name="password" />
+    <div class="links">
+        <a href="/recover">Forgot password?</a>
+        <a href="/register">Don't have an account?</a>
+    </div>
+    <input class="gradient-button" type="submit" value="Log in" />
+</form>
+</div>
+<div class="placeholder"></div>
+
+<div class="copyright-box">
+<p class="copyright">Copyright 2022 by Poysse. All Rights Reserved.</p>
+<p class="copyright">Selfest™ is Powered by Poysse.</p>
+</div>
+
+</body>
+</html>
